@@ -1,3 +1,4 @@
+#algorithm pulled from https://www.codeandgadgets.com/karatsuba-multiplication-python/ for learning purposes
 def karatsubaMultiplication(x ,y):
     """Multiply two integers using Karatsuba's algorithm."""
     #convert to strings for easy access to digits
