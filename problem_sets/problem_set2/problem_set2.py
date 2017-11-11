@@ -1,13 +1,54 @@
-This file contains all of the 100,000 integers between 1 and 100,000 (inclusive) in some order, with no integer repeated.
+f = open("IntegerArray.txt","r")
+integer_array = []
 
-Your task is to compute the number of inversions in the file given, where the ith row of the file indicates the ith entry of an array.
+for line in f:
+    integer_array.append(int(line.strip()))
 
-Because of the large size of this array, you should implement the fast divide-and-conquer algorithm covered in the video lectures.
+#divide and conquer algorithm that emulates merge sort
+def countInversions(unsorted_array):
+    if (len(unsorted_array) == 0 or len(unsorted_array) == 1):
+        return 0
+    else:
 
-The numeric answer for the given input file should be typed in the space below.
+        midpoint = len(unsorted_array) // 2
+        left_half = unsorted_array[:midpoint]
+        right_half = unsorted_array[midpoint:]
 
-So if your answer is 1198233847, then just type 1198233847 in the space provided without any space / commas / any other punctuation marks. You can make up to 5 attempts, and we'll use the best one for grading.
+        x = countInversions(left_half)
+        y = countInversions(right_half)
 
-(We do not require you to submit your code, so feel free to use any programming language you want --- just type the final numeric answer in the following space.)
+        i = 0
+        j = 0
+        k = 0
+        inversion_count = 0
 
-[TIP: before submitting, first test the correctness of your program on some small test files or your own devising. Then post your best test cases to the discussion forums to help your fellow students!]
+        while (i < len(left_half) and j < len(right_half)):
+            if(left_half[i] < right_half[j]):
+                unsorted_array[k] = left_half[i]
+                i += 1
+            else:
+                unsorted_array[k] = right_half[j]
+                j += 1
+                #only increment inversion count when right_half[j] < left_half[i]
+                inversion_count += len(left_half) - i
+            k += 1
+
+        while (i < len(left_half)):
+            unsorted_array[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while (j < len(right_half)):
+            unsorted_array[k] = right_half[j]
+            j += 1
+            k += 1
+
+        return inversion_count + x + y
+
+test_case_1 = [1, 3, 5, 2, 4, 6]
+test_case_2 = [1, 5, 3, 2, 4]
+test_count_1 = countInversions(test_case_1)
+test_count_2 = countInversions(test_case_2)
+
+final_answer = countInversions(integer_array)
+print(final_answer)

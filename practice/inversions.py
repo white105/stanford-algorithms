@@ -9,8 +9,8 @@ def countInversions(unsorted_array):
         left_half = unsorted_array[:midpoint]
         right_half = unsorted_array[midpoint:]
 
-        countInversions(left_half)
-        countInversions(right_half)
+        x = countInversions(left_half)
+        y = countInversions(right_half)
 
         i = 0
         j = 0
@@ -38,9 +38,9 @@ def countInversions(unsorted_array):
             j += 1
             k += 1
 
-        return inversion_count
+        return inversion_count + x + y
 
 
-unsorted_array = [1, 3, 5, 2, 4, 6]
+unsorted_array = [1, 5, 3, 2, 4]
 inversion_count = countInversions(unsorted_array)
 print(inversion_count)
