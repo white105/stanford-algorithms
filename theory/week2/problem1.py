@@ -1,43 +1,16 @@
+#runs in O(2n) or O(n)
 def secondLargest(unsorted_array):
-    if (len(unsorted_array) == 1):
-        return 0
-    else:
-        midpoint = len(unsorted_array) // 2
-        left_half = unsorted_array[:midpoint]
-        right_half = unsorted_array[midpoint:]
+    largest = unsorted_array[0]
+    for i in range(0, len(unsorted_array)):
+        if (unsorted_array[i] > largest):
+            largest = unsorted_array[i]
 
-        secondLargest(left_half)
-        secondLargest(right_half)
+    secondLargest = unsorted_array[0]
+    for j in range(0, len(unsorted_array)):
+        if (unsorted_array[j] > secondLargest and unsorted_array[j] != largest):
+            secondLargest = unsorted_array[j]
 
-        i = 0
-        j = 0
-        k = 0
-
-        while(i < len(left_half) and j < len(right_half)):
-            if(left_half[i] < right_half[j]):
-                unsorted_array[k] = left_half[i]
-                i += 1
-            else:
-                unsorted_array[k] = right_half[j]
-                j += 1
-
-            k += 1
-
-        while(i < len(left_half)):
-            unsorted_array[k] = left_half[i]
-            i += 1
-            k += 1
-
-        while(j < len(right_half)):
-            unsorted_array[k] = right_half[j]
-            j += 1
-            k += 1
-
-        return unsorted_array[-2]
-
-
-
-
+    return secondLargest
 
 unsorted_array = [1, 5, 3, 19, 2, 13, 12, 8]
 second_largest = secondLargest(unsorted_array)
