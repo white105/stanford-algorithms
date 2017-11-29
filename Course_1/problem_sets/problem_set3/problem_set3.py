@@ -5,45 +5,53 @@ integer_array = []
 for line in f:
     integer_array.append(int(line.strip()))
 
-def quickSort(a, n):
-    if (n == 1):
+###Help from https://github.com/meclark256/Coursera/blob/master/QuickSort.py
+
+#problem 1 - count comparisons with pivot as first element
+
+first_element_counter = 0
+
+def quickSortFirstElement(arr, left, right):
+    global first_element_counter
+    if (left >= right):
         return
 
-    pivot = a[0]
-    index = partition(a, pivot)
-    quickSort(a, 0, index - 1)
-    quickSort(a, index, len(a) - 1)
+    pivot = partitionFirstElement(arr, left, right)
+    first_element_counter += right - left - 1
+    quickSortFirstElement(arr, left, pivot)
+    quickSortFirstElement(arr, pivot + 1, right)
 
+def partitionFirstElement(arr, left, right):
+    pivot = arr[left]
+    i = left + 1
 
-#single scan of array
-def partition(a, pivot):
-
-    i = 1
-    seenGreaterThan = False
-
-    for(j in range(1, right))
-        if(a[j] < pivot && seenGreaterThan):
-            temp = a[j]
-            a[j] = a[i]
-            a[i] = temp
+    for j in range(left + 1, right):
+        if (arr[j] < pivot):
+            temp = arr[j]
+            arr[j] = arr[i]
+            arr[i] = temp
             i += 1
-        if(a[j] > pivot):
-            seenGreaterThan = True
 
-    #final swap
-    temp = a[i - 1]
-    a[i - 1] = pivot
-    a[left] = temp
+    left = arr[left]
+    arr[left] = arr[i - 1]
+    arr[i - 1] = left
+    return i - 1
 
+#A method for partition around the first element of the array
+def partition_first(array, leftend, rightend):
+    pivot = array[leftend]
+    i = leftend + 1
+    for j in range(leftend + 1, rightend):
+        if array[j] < pivot:
+            temp = array[j]
+            array[j] = array[i]
+            array[i] = temp
+            i += 1
 
-test_case_1 = integer_array[:10]
-test_case_2 = integer_array[:100]
-quickSort(test_case_1, 0, len(test_case_1) - 1)
+    leftendval = array[leftend]
+    array[leftend] = array[i-1]
+    array[i-1] = leftendval
+    return i - 1
 
-
-
-#problem 2
-
-
-
-#problem 3
+ans = quickSortFirstElement(integer_array[:10], 0, len(integer_array[:10]))
+print(ans)
